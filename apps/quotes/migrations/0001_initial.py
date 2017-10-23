@@ -3,6 +3,7 @@
 from __future__ import unicode_literals
 
 from django.db import migrations, models
+import django.db.models.deletion
 
 
 class Migration(migrations.Migration):
@@ -10,21 +11,20 @@ class Migration(migrations.Migration):
     initial = True
 
     dependencies = [
+        ('loginandregistration', '0001_initial'),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='User',
+            name='Quote',
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('first_name', models.CharField(max_length=255)),
-                ('last_name', models.CharField(max_length=255)),
-                ('email', models.EmailField(max_length=255)),
-                ('alias', models.CharField(default='none', max_length=255)),
-                ('birthday', models.DateTimeField()),
+                ('quote_text', models.TextField()),
+                ('quote_author', models.CharField(max_length=255)),
                 ('created_at', models.DateTimeField(auto_now_add=True)),
                 ('updated_at', models.DateTimeField(auto_now=True)),
-                ('password', models.CharField(max_length=255)),
+                ('favorites', models.ManyToManyField(related_name='favorite_quotes', to='loginandregistration.User')),
+                ('quote_posted_by', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='posting_users', to='loginandregistration.User')),
             ],
         ),
     ]

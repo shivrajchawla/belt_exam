@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Success</title>
+    <title>Successfully added quotes</title>
     <!-- Latest compiled and minified CSS -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 
@@ -11,17 +11,22 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 </head>
 <body>
-    <h1>Yo! Logged in!</h1>
     <div class="container">
-        <h1>User ID: {{shit.id}}</h1>
-        <h2>First Name: {{shit.first_name}}</h2>
-        <h2>Last Name: {{shit.last_name}}</h2>
-        <h2>Email: {{shit.email}}</h2>
-        <h3>Created At: {{shit.created_at}}</h3>
-        <h3>Updated At: {{shit.updated_at}}</h3>
-        <p>Password: {{shit.password}}</p>
-        <a href="/login_and_registration/logout">LOGOUT</a>
+            <a href="/quotes/">DASHBOARD</a>
+            <a href="/login_and_registration/logout">LOGOUT</a>
+        <h1>Posts by: {{request.session.first_name}} {{request.session.last_name}}</h1>
+        <h4>Count: {{context.count}}</h4>
+        <div class="container">
+            {% for post in context %}
+              <p>{{post.quote_author}} : {{post.quote_text}}</p>
+            {% endfor %}
+        </div>
+        <h2>Liked posts by: {{request.session.first_name}} {{request.session.last_name}}</h2>
+        <div class="container">
+                {% for post in liked_quotes %}
+                  <p>{{post.quote_author}} : {{post.quote_text}}</p>
+                {% endfor %}
+        </div>
     </div>
-    
 </body>
 </html>

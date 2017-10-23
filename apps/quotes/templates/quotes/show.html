@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Success</title>
+    <title>Successfully added quotes</title>
     <!-- Latest compiled and minified CSS -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 
@@ -13,15 +13,11 @@
 <body>
     <h1>Yo! Logged in!</h1>
     <div class="container">
-        <h1>User ID: {{shit.id}}</h1>
-        <h2>First Name: {{shit.first_name}}</h2>
-        <h2>Last Name: {{shit.last_name}}</h2>
-        <h2>Email: {{shit.email}}</h2>
-        <h3>Created At: {{shit.created_at}}</h3>
-        <h3>Updated At: {{shit.updated_at}}</h3>
-        <p>Password: {{shit.password}}</p>
-        <a href="/login_and_registration/logout">LOGOUT</a>
+        <h1>quoted by: {{shit.quote_author}}</h1>
+        <h2>message: {{shit.quote_text}}</h2>
+        <h2>created by: {{shit.quote_posted_by}}</h2>
     </div>
+    <a href="/quotes/show_posts">Show your posts</a>
     
 </body>
 </html>

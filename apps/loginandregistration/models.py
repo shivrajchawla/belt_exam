@@ -26,6 +26,8 @@ class UserManager(models.Manager): #this is the django models.manager class whic
         password = post['password']
         first_name = post['first_name']
         last_name = post['last_name']
+        birthday = post['birthday']
+        alias = post['alias']
 
         errors = [] #create empty array and append fails into this
 
@@ -60,18 +62,22 @@ class UserManager(models.Manager): #this is the django models.manager class whic
     def create_user(self,post): #this method creates the actual user
         first_name = post['first_name'] #get shit from the form
         last_name = post['last_name']
+        alias = post['alias']
+        birthday = post['birthday']
         email = post['email'].lower() #always set the email to lower
         password = bcrypt.hashpw(post['password'].encode(), bcrypt.gensalt()) #collect the password
-        return self.create(first_name = first_name, email = email, last_name = last_name, password = password) #throw that shit into the database query of "create" and it'll put it into the db
+        return self.create(first_name = first_name, email = email, last_name = last_name, password = password, alias = alias, birthday = birthday) #throw that shit into the database query of "create" and it'll put it into the db
 
 class User(models.Model):
     first_name = models.CharField(max_length=255)
     last_name = models.CharField(max_length=255)
     email = models.EmailField(max_length=255)
+    alias = models.CharField(max_length=255, default ="none")
+    birthday = models.DateTimeField(auto_now = False)
     created_at = models.DateTimeField(auto_now_add = True)
     updated_at = models.DateTimeField(auto_now = True)
     password = models.CharField(max_length=255)
     objects = UserManager() #this inherits from god manager now AND usermanager
     def __str__(self): #always add this so it looks prettier when printing
-        return "{} {} {} {}".format(self.first_name,self.last_name,self.email,self.password)
+        return "{} {}".format(self.first_name,self.last_name)
 # Create your models here.

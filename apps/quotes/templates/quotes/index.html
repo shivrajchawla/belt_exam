@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Quotes</title>
+    <!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+<!-- Optional theme -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+</head>
+<body>
+    <a href="/login_and_registration/logout">LOGOUT</a>
+    <a href="/quotes/show_posts">SHOW MY POSTS</a>
+    <h1>Yo! {{request.session.first_name}} {{request.session.last_name}}</h1>
+    {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+    <div class="container col-md-8">
+        <h2>Quotable Quotes</h2>
+        {% for post in context %}
+            <h3>{{post.quote_author}}: {{post.quote_text}}</h3>
+            <p>Posted by: {{post.quote_posted_by}}</p>
+            <form action="/quotes/like" method="POST">
+                {% csrf_token %}
+                <input type="hidden" name="like" value="{{post.id}}">
+                <input type="hidden" name ="user_id" value="{{request.session.user_id}}">
+                <button type="submit">Like this Quote!</button>
+            </form>
+        {% endfor %}
+    </div>
+    <div class="container col-md-4">
+        <h2>Liked Quotes</h2>
+            {% for post in liked_quotes %}
+              <p>{{post.quote_author}} : {{post.quote_text}}</p>
+            {% endfor %}
+    </div>
+    <div class="container col-md-4">
+        <form action='/quotes/add_quote' method="POST">
+            {% csrf_token %}
+            <div class="form-group row">
+                <label for="example-text-input" class="col-2 col-form-label">Quoted By:</label>
+                <div class="col-10">
+                    <input class="form-control" type="text" name="quoted_by" id="example-text-input" required>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="example-text-input" class="col-2 col-form-label">Message: </label>
+                <div class="col-10">
+                    <input class="form-control" type="text" name="message" id="example-text-input" required>
+                </div>
+            </div>
+            <input type="hidden" name ="user_id" value="{{request.session.user_id}}">
+            <button type="submit" class="btn btn-primary">Submit</button>    
+        </form>
+    </div>
+    
+</body>
+</html>
